@@ -1,0 +1,27 @@
+<?php
+include 'Source/functions.php';
+$fullWidth = $argv[1];
+$fullHeight = $argv[2];
+$scaleFactorX = $fullWidth / 1280.0;
+$scaleFactorY = $fullHeight / 720.0;
+
+$title = get_title($fullWidth, $fullHeight);
+?>
+[Definition]
+titleIds = 00050000101C9300,00050000101C9400,00050000101C9500
+name = "The Legend of Zelda: Breath of the Wild - <?=$scaleFactorY?>x Shadow Scale"
+version = 2
+
+[TextureRedefine]
+width = 360
+height = 360
+formats = 0x005
+overwriteWidth = <?=round($scaleFactorX*360)?> 
+overwriteHeight = <?=round($scaleFactorY*360)?> 
+
+[TextureRedefine]
+width = 720
+height = 720
+formats = 0x005
+overwriteWidth = <?=round($scaleFactorX*720)?> 
+overwriteHeight = <?=round($scaleFactorY*720)?> 
