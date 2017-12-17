@@ -1,0 +1,27 @@
+<?php
+include 'Source/functions.php';
+$fullWidth = $argv[1];
+$fullHeight = $argv[2];
+$scaleFactorX = $fullWidth / 1280.0;
+$scaleFactorY = $fullHeight / 720.0;
+
+$title = get_title($fullWidth, $fullHeight);
+?>
+[Definition]
+titleIds = 0005000010116100,00050000101C4C00,00050000101C4D00
+name = "Xenoblade Chronicles X - <?=$scaleFactorY?>x Shadow Scale"
+version = 2
+
+[TextureRedefine] #XCX Medium distance shadow	
+width = 512
+height = 512
+formats = 0x005	
+overwriteWidth = <?=round($scaleFactorX*512)?> 
+overwriteHeight = <?=round($scaleFactorY*512)?> 
+
+[TextureRedefine] #XCX shadow
+width = 1024
+height = 1024
+formats = 0x005
+overwriteWidth = <?=round($scaleFactorX*1024)?> 
+overwriteHeight = <?=round($scaleFactorY*1024)?> 

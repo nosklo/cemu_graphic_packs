@@ -11,7 +11,7 @@ $scaleFactorY = always_decimal_format($fullHeight / 720.0);
 // shader fdb5a87dd0368c6b 
 // shadows scaling, ie 4096 = x4 
 // To do - some nice edge smoothing at higher res
-const float resScale = <?=$scaleFactorX?>;
+const float resScale = <?=$scaleFactorY?>;
 const float shadowExposure = 0.85;
 //const float resScale = 4;
 uniform ivec4 uf_remappedPS[23];
