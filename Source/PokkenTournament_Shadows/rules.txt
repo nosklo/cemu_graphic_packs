@@ -1,0 +1,20 @@
+<?php
+include 'Source/functions.php';
+$fullWidth = $argv[1];
+$fullHeight = $argv[2];
+$scaleFactorX = $fullWidth / 1280.0;
+$scaleFactorY = $fullHeight / 720.0;
+
+$title = get_title($fullWidth, $fullHeight);
+?>
+[Definition]
+titleIds = 00050000101DF400,00050002101DF401
+name = "Pokken Tournament - <?=$scaleFactorY?>x Shadow Scale"
+version = 2
+
+[TextureRedefine]
+width = 512
+height = 512
+formats = 0x005
+overwriteWidth = <?=round($scaleFactorX*512)?> 
+overwriteHeight = <?=round($scaleFactorY*512)?> 
