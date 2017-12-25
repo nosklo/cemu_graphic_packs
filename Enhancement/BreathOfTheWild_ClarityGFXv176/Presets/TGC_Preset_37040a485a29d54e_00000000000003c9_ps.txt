@@ -13,27 +13,27 @@
 // Shader dumped from Cemu 1.11.2 from BotW 1.4.0
 // v 2.0
 // Add 1.4.0 support
-
+//The Complaining Gamer Preset 
 //##########################################################
 #define adjust_bloom 1 // 0: disable, 1: enable.
 //BloomFactor
-const float bloomFactor = 0.197;                       // Default is 0.020 (rough estimate based on Switch)
+const float bloomFactor = 0.33;                        // Default is 0.020 (rough estimate based on Switch)
 
 #define HDRpassing 1 // 0: disable, 1: enable.
 //Fake High Dynamic Range.
-const float HDRPower = 1.030;                          // 0.0 to  8.0  Default 1.30.
+const float HDRPower = 1.020;                          // 0.0 to  8.0  Default 1.30.
 const float radius1 = 0.793;                           // 0.0 to  8.0  Default 0.793  
-const float radius2 = 0.870;                           // 0.0 to  8.0  Default 0.87  "Raising this seems to make the effect stronger and also brighter."
+const float radius2 = 0.87;                            // 0.0 to  8.0  Default 0.87  "Raising this seems to make the effect stronger and also brighter."
 
 #define lumapassing 1 // 0: disable, 1: enable.
 //LumaShapening
-const float sharp_strength = 0.65;                     //[0.10 to 3.00] Strength of the sharpening Default is 0.65
-const float sharp_clamp = 0.035;                       //[0.000 to 1.000] Limits maximum amount of sharpening a pixel recieves - Default is 0.035
+const float sharp_strength = 0.25;                     //[0.10 to 3.00] Strength of the sharpening Default is 0.65
+const float sharp_clamp = 0.085;                       //[0.000 to 1.000] Limits maximum amount of sharpening a pixel recieves - Default is 0.035
 
 //Advanced sharpening settings
 const float offset_bias = 1.0;                         //[0.0 to 6.0] Offset bias adjusts the radius of the sampling pattern.
 
-#define Tone_map 1                                     // 0: disable, 1-8: enable.
+#define Tone_map 8                                     // 0: disable, 1-8: enable.
 													   // Reshade ToneMap Option 1
 													   // linearToneMapping  Option 2             
 													   // simpleReinhardToneMapping Option 3     
@@ -59,9 +59,9 @@ const int WhitePoint = 235; // [0, 255]  The new white point. Everything brighte
 #define lggpass 1 // 0: disable, 1: enable.
 //Lift Gamma Gain
 vec3 RGB_Lift = vec3(1.000, 1.000, 1.000);				   // [0.000 to 2.000] Adjust shadows for Red, Green and Blue.
-vec3 RGB_Gamma = vec3(1.000, 1.000, 1.000);                // [0.000 to 2.000] Adjust midtones for Red, Green and Blue
+vec3 RGB_Gamma = vec3(0.600, 0.600, 0.600);                // [0.000 to 2.000] Adjust midtones for Red, Green and Blue
 vec3 RGB_Gain = vec3(1.000, 1.000, 1.000);                 // [0.000 to 2.000] Adjust highlights for Red, Green and Blue
- // Note that a value of 1.0 is a neutral setting that leave the color unchanged.
+														   // Note that a value of 1.0 is a neutral setting that leave the color unchanged.
 
 #define vibpass 1 // 0: disable, 1: enable.
 //VibrancePass
@@ -74,14 +74,14 @@ const float Power = 4.0;                               // Min 0.0 Max 8.0 Defaul
 vec3 RGBNegativeAmount = vec3(0.88, 0.88, 0.88);
 float Strength = 0.20;                                 // Min 0.0 Max 1.0 Default 0.4
 
-#define Techine 0 // 0: disable, 1: enable.
+#define Techine 1 // 0: disable, 1: enable.
 //Technicolor2
-const float Technicolor2_Red_Strength = 0.2;	       // "Higher means darker and more intense colors." Default 0.2
-const float Technicolor2_Green_Strength = 0.2;	       // "Higher means darker and more intense colors." Default 0.2
-const float Technicolor2_Blue_Strength = 0.2;	       // "Higher means darker and more intense colors." Default 0.2
+const float Technicolor2_Red_Strength = 0.000;	       // "Higher means darker and more intense colors." Default 0.2
+const float Technicolor2_Green_Strength = 0.000;	   // "Higher means darker and more intense colors." Default 0.2
+const float Technicolor2_Blue_Strength = 0.000;	       // "Higher means darker and more intense colors." Default 0.2
 const float Technicolor2_Brightness = 1.0;             // "Higher means brighter image." min 0.5 max 1.5 Default 1.0
-const float Technicolor2_Strength = 1.0;		       // [Default is 1.0]
-const float Technicolor2_Saturation = 1.0;             // Default is 1.0 min 0.0 max 1.5 "Additional saturation control since this effect tends to oversaturate the image." 
+const float Technicolor2_Strength = 0.40;		       // [Default is 1.0]
+const float Technicolor2_Saturation = 0.51;            // Default is 1.0 min 0.0 max 1.5 "Additional saturation control since this effect tends to oversaturate the image." 
 
 //Curves Contrast
 #define CurvesPss 1 // 0: disable, 1: enable.
@@ -100,7 +100,7 @@ const float Linearization = 0.5;                       // min 0.5 max 2.0 Defaul
 const float BaseCurve = 1.5;                           // min 0.0 max 2.0 Default 1.5
 const float BaseGamma = 1.00;                          // min 0.7 max 2.0 Default 1.0
 const float EffectGamma = 0.68;                        // min 0.0 max 2.0 Default 0.68
-               
+
 //###########################################################
 
 //Do not edit under this line.
@@ -125,7 +125,7 @@ vec3 linearToneMapping(vec3 color)
 vec3 simpleReinhardToneMapping(vec3 color)
 {
 	float exposure = 1.5;
-	color *= exposure/(1. + color / exposure);
+	color *= exposure / (1. + color / exposure);
 	color = pow(color, vec3(1. / Gamma));
 	return color;
 }
@@ -151,7 +151,7 @@ vec3 whitePreservingLumaBasedReinhardToneMapping(vec3 color)
 
 vec3 RomBinDaHouseToneMapping(vec3 color)
 {
-    color = exp( -1.0 / ( 2.72*color + 0.15 ) );
+	color = exp(-1.0 / (2.72*color + 0.15));
 	color = pow(color, vec3(1. / Gamma));
 	return color;
 }
@@ -178,7 +178,7 @@ vec3 Uncharted2ToneMapping(vec3 color)
 	float white = ((W * (A * W + C * B) + D * E) / (W * (A * W + B) + D * F)) - E / F;
 	color /= white;
 	color = pow(color, vec3(1. / Gamma));
-    return color;
+	return color;
 }
 
 vec3 ReshadeToneMap(vec3 inputColor) {
@@ -186,7 +186,7 @@ vec3 ReshadeToneMap(vec3 inputColor) {
 	color = clamp(color - defog * FogColor * 2.55, 0.0, 1.0); // defog
 	color *= Exposure / (1.0 + color / Exposure);
 	color = pow(color, vec3(1. / Gamma)); // Gamma
-	
+
 	const vec3 coefLuma = vec3(0.2126, 0.7152, 0.0722);
 	float lum = dot(coefLuma, color);
 
@@ -265,7 +265,7 @@ vec3 Technicolor2(vec3 inputColor) {
 //Technicolor
 vec3 TechnicolorPass(vec3 color)
 {
-	
+
 	const vec3 cyanfilter = vec3(0.0, 1.30, 1.0);
 	const vec3 magentafilter = vec3(1.0, 0.0, 1.05);
 	const vec3 yellowfilter = vec3(1.6, 1.6, 0.05);
@@ -299,7 +299,7 @@ vec3 LevelsPass(vec3 inputColor) {
 
 //FilmPass
 vec3 FilmPass(vec3 inputColor) {
-     
+
 	vec3 B = inputColor.rgb;
 	vec3 G = B;
 	vec3 H = vec3(0.01);
@@ -314,9 +314,9 @@ vec3 FilmPass(vec3 inputColor) {
 
 	B = pow(B, 1.0 / vec3(BaseGamma));
 
-	float RedCurve = 1.0;                            
-    float GreenCurve = 1.0;                          
-    float BlueCurve = 1.0; 
+	float RedCurve = 1.0;
+	float GreenCurve = 1.0;
+	float BlueCurve = 1.0;
 	float a = RedCurve;
 	float b = GreenCurve;
 	float c = BlueCurve;
@@ -338,9 +338,9 @@ vec3 FilmPass(vec3 inputColor) {
 	vec3 Di = 1.0 - D;
 
 	D = mix(D, Di, Filmic_Bleach);
-	float EffectGammaR = 1.0;                        
-	float EffectGammaG = 1.0;                        
-	float EffectGammaB = 1.0;    
+	float EffectGammaR = 1.0;
+	float EffectGammaG = 1.0;
+	float EffectGammaB = 1.0;
 	D.r = pow(abs(D.r), 1.0 / EffectGammaR);
 	D.g = pow(abs(D.g), 1.0 / EffectGammaG);
 	D.b = pow(abs(D.b), 1.0 / EffectGammaB);
@@ -429,7 +429,7 @@ vec3 VibrancePass(vec3 color) {
 
 	float color_saturation = max_color - min_color; // The difference between the two is the saturation
 
-	// Extrapolate between luma and original by 1 + (1-saturation) - current
+													// Extrapolate between luma and original by 1 + (1-saturation) - current
 	vec3 coeffVibrance = VibranceRGBBalance * Vibrance;
 
 	color = mix(vec3(luma), color, 1.0 + (coeffVibrance * (1.0 - (sign(coeffVibrance) * color_saturation))));
@@ -466,7 +466,7 @@ float lumasharping(sampler2D tex, vec2 pos) {
 					   // -- Calculate the sharpening --
 	vec3 sharp = ori - blur_ori;  //Subtracting the blurred image from the original image
 
-					   // -- Adjust strength of the sharpening and clamp it--
+								  // -- Adjust strength of the sharpening and clamp it--
 	vec4 sharp_strength_luma_clamp = vec4(sharp_strength_luma * (0.5 / sharp_clamp), 0.5); //Roll part of the clamp into the dot
 
 	float sharp_luma = clamp((dot(vec4(sharp, 1.0), sharp_strength_luma_clamp)), 0.0, 1.0); //Calculate the luma, adjust the strength, scale up and clamp
